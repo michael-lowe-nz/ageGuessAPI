@@ -7,6 +7,7 @@ const {
   addEntry,
   deleteEntry
 } = require('./../db/entries')
+const wiki  = require('wtf_wikipedia')
 
 /* GET entries */
 router.get('/', function(req, res) {
@@ -34,5 +35,13 @@ router.get('/:id/delete', function(req, res) {
     .catch(err => res.send(err))
 })
 
+router.post('/wiki', (req, res) => {
+  wiki.from_api(req.body.name, "en", function(markup){
+    var obj= wiki.parse(markup)
+    var mayor= obj.infobox.leader_name
+    console.log(obj)
+    res.json(obj)
+  })
+})
 
 module.exports = router;
