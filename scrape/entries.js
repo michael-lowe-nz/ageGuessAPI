@@ -1,8 +1,6 @@
 const $ = require('cheerio')
 const request = require('superagent')
 
-const names = ["Lebron_James", "Richie_McCaw", "John_Key", "Matt_Damon"]
-
 const scrapeUrl = (url) => {
   request
     .get(url)
