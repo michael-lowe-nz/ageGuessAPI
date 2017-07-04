@@ -8,8 +8,9 @@ const scrapeUrl = (url) => {
       if (err) return console.log(err)
       const html = $.load(res.text)
       const fullName = html('#firstHeading').text()
-      const age = html('.ForceAgeToShow').text()
-      const url = html('.infobox .image img').attr('src')
+      const ageRaw = html('.ForceAgeToShow').text()
+      const age = getAgeFromString(ageRaw)
+      const url = formatUrl(html('.infobox .image img').attr('src'))
       const data = {
         fullName,
         age,
@@ -26,3 +27,14 @@ const scrapeByName = (name) => {
 const clooney = 'https://en.wikipedia.org/wiki/George_Clooney'
 
 scrapeByName('Lebron_James')
+
+const getAgeFromString = str => Number(str.replace(/\D/g,''))
+const formatUrl = url => `https://${url.substring(2)}`
+
+// Dream Code:
+// 
+// getDataFromWiki('Lebron James')
+//   .then(data => validateData(data))
+//   .then(validatedData => addEntry(validatedData))
+//   .then(response => res.send('success'))
+//   .catch(err => res.send('error'))
