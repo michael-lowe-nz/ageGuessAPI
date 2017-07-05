@@ -1,7 +1,12 @@
 const $ = require('cheerio')
 const request = require('superagent')
+const { addEntry, deleteEntry } = require('../db/entries')
+const getAgeFromString = require('./lib/ageFromStr')
+const formatUrl = require('./lib/formatUrl')
 
 const scrapeUrl = (url) => {
+  // has to return a Promise
+  // e.g. reutrn new Promise((resolve, reject) => { do stuff})
   request
     .get(url)
     .end((err, res) => {
@@ -21,18 +26,17 @@ const scrapeUrl = (url) => {
 }
 
 const scrapeByName = (name) => {
-  return scrapeUrl(`https://en.wikipedia.org/wiki/${name}`)
+  scrapeUrl(`https://en.wikipedia.org/wiki/${name}`)
 }
-
-const clooney = 'https://en.wikipedia.org/wiki/George_Clooney'
 
 scrapeByName('Lebron_James')
 
-const getAgeFromString = str => Number(str.replace(/\D/g,''))
-const formatUrl = url => `https://${url.substring(2)}`
+module.exports = {
+  scrapeUrl
+}
 
 // Dream Code:
-// 
+//
 // getDataFromWiki('Lebron James')
 //   .then(data => validateData(data))
 //   .then(validatedData => addEntry(validatedData))
