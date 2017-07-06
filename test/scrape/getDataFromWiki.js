@@ -9,6 +9,7 @@ const getDataFromWiki = require('../../scrape/getDataFromWiki')
 //   .then(response => res.send('success'))
 //   .catch(err => res.send('error'))
 
+// /wiki/Special:RandomInCategory/Living_people
 
 test('getDataFromWiki scrapes lebron_james and resolves with correct JSON', t => {
   const expected = {
