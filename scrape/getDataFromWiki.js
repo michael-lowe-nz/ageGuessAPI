@@ -1,44 +1,32 @@
 const $ = require('cheerio')
 const request = require('superagent')
-const { addEntry, deleteEntry } = require('../db/entries')
 const getAgeFromString = require('./lib/ageFromStr')
-const formatUrl = require('./lib/formatUrl')
+const formatImgUrl = require('./lib/formatImgUrl')
+const getWikiUrl = require('./lib/getWikiUrl')
 
-const scrapeUrl = (url) => {
-  // has to return a Promise
-  // e.g. reutrn new Promise((resolve, reject) => { do stuff})
-  request
-    .get(url)
-    .end((err, res) => {
-      if (err) return console.log(err)
-      const html = $.load(res.text)
-      const fullName = html('#firstHeading').text()
-      const ageRaw = html('.ForceAgeToShow').text()
-      const age = getAgeFromString(ageRaw)
-      const url = formatUrl(html('.infobox .image img').attr('src'))
-      const data = {
-        fullName,
-        age,
-        url
-      }
-      console.log(data)
-    })
+const getDataFromWiki = (name) => {
+  return new Promise((resolve, reject) => {
+    request
+      .get(getWikiUrl(name))
+      .end((error, response) => {
+        const html = $.load(response.text)
+        if (pageDoesNotExist(html)) return reject('404')
+        // if (pageIsNotPerson(html)) return reject('Page is not a person')
+        if (!pageHasImage(html)) return reject('Page has no image')
+        resolve(constructData(html))
+      })
+  })
 }
 
-const scrapeByName = (name) => {
-  scrapeUrl(`https://en.wikipedia.org/wiki/${name}`)
+const pageHasImage = (html) => html('body').find('.infobox .image img').length ? true : false
+const pageIsNotPerson = (html) => html('body').find('.biography').length ? false : true
+const pageDoesNotExist = (html) => html('body').find('#noarticletext').length ? true : false
+const constructData = (html) => {
+  const ageRaw = html('.ForceAgeToShow').text()
+  return {
+    fullName: html('#firstHeading').text(),
+    age: getAgeFromString(ageRaw),
+    url: formatImgUrl(html('.infobox .image img').attr('src'))
+  }
 }
-
-scrapeByName('Lebron_James')
-
-module.exports = {
-  scrapeUrl
-}
-
-// Dream Code:
-//
-// getDataFromWiki('Lebron James')
-//   .then(data => validateData(data))
-//   .then(validatedData => addEntry(validatedData))
-//   .then(response => res.send('success'))
-//   .catch(err => res.send('error'))
+module.exports = getDataFromWiki

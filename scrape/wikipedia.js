@@ -13,6 +13,40 @@ const request = require('superagent')
 wiki.from_api("James Blunt", "en", function(markup){
   var obj= wiki.parse(markup)
   var mayor= obj.infobox.leader_name
-  console.log(obj)
+  console.log(obj.infobox_template)  // "John Tory"
+})
+
+wiki.from_api("Lebron James", "en", function(markup){
+  var obj= wiki.parse(markup)
+  var mayor= obj.infobox.leader_name
+  console.log(obj.infobox_template)
+  // "John Tory"
+})
+
+wiki.from_api("Bill English", "en", function(markup){
+  var obj= wiki.parse(markup)
+  var mayor= obj.infobox.leader_name
+  console.log(obj.infobox_template)
+  // "John Tory"
+})
+
+wiki.from_api("Battle of Paschaendaele", "en", function(markup){
+  var obj= wiki.parse(markup)
+  var mayor= obj.infobox.leader_name
+  console.log(obj.infobox_template)
+  // "John Tory"
+})
+
+wiki.from_api("New Zealand", "en", function(markup){
+  var obj= wiki.parse(markup)
+  var mayor= obj.infobox.leader_name
+  console.log(obj.infobox_template)
+  // "John Tory"
+})
+
+wiki.from_api("Guitar", "en", function(markup){
+  var obj= wiki.parse(markup)
+  var mayor= obj.infobox.leader_name
+  console.log(obj.infobox_template)
   // "John Tory"
 })
