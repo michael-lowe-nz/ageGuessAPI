@@ -3,8 +3,7 @@ const request = require('superagent')
 
 const getPeopleFromWiki = (url) => {
   return new Promise((resolve, reject) => {
-    request
-      .get(url)
+    request.get(url)
       .end((error, response) => {
         const html = $.load(response.text)
         let people = []
@@ -18,11 +17,4 @@ const getPeopleFromWiki = (url) => {
   })
 }
 
-getPeopleFromWiki('https://en.wikipedia.org/wiki/Category:Living_people?from=A')
-  .then(response => {
-    console.log(response);
-    console.log('Length:', response.length);
-  })
-  .catch(error => console.log(error))
-
-  module.exports = getPeopleFromWiki
+module.exports = getPeopleFromWiki
