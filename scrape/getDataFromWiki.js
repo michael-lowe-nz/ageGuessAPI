@@ -10,8 +10,8 @@ const getDataFromWiki = (name) => {
       .get(getWikiUrl(name))
       .end((error, response) => {
         const html = $.load(response.text)
-        if (pageDoesNotExist(html)) return reject('404')
-        // if (pageIsNotPerson(html)) return reject('Page is not a person')
+        if (!pageExists(html)) return reject(`404: Page for ${name} not found.`)
+        // if (!pageIsPerson(html)) return reject('Page is not a person')
         if (!pageHasImage(html)) return reject('Page has no image')
         resolve(constructData(html))
       })
@@ -19,8 +19,9 @@ const getDataFromWiki = (name) => {
 }
 
 const pageHasImage = (html) => html('body').find('.infobox .image img').length ? true : false
-const pageIsNotPerson = (html) => html('body').find('.biography').length ? false : true
-const pageDoesNotExist = (html) => html('body').find('#noarticletext').length ? true : false
+const pageIsPerson = (html) => html('body').find('.biography').length ? true : false
+const pageExists = (html) => html('body').find('#noarticletext').length ? false : true
+
 const constructData = (html) => {
   const ageRaw = html('.ForceAgeToShow').text()
   return {

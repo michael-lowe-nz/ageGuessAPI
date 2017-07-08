@@ -27,7 +27,7 @@ test('getDataFromWiki scrapes lebron_james and resolves with correct JSON', t =>
 test('getDataFromWiki throws an error when wiki page does not exist', t => {
   return getDataFromWiki('a_guy_that_does_not_exist')
     .catch(error => {
-      return t.equal(error, '404', 'It gets a 404 when a non existent person given')
+      return t.equal(error, '404: Page for a_guy_that_does_not_exist not found.', 'It gets a 404 when a non existent person given')
     })
 })
 
@@ -40,4 +40,14 @@ test('getDataFromWiki throws an error when the wiki page does not have an image'
   return getDataFromWiki('Aamer_Butt_(cricketer,_born_1976)')
     .then(res => t.notOk(res))
     .catch(error => t.equal(error, 'Page has no image'))
+})
+
+test('getDataFromWiki can operate on a whole array of names and throw no errors', t => {
+  const people = ["mariah_carey", "peter_jackson", "stephen_curry", "winston_churchill"]
+  const promises = people.map(name => getDataFromWiki(name))
+  return Promise.all(promises)
+    .then(res => {
+      console.log('Res:', res)
+      t.ok(res, 'Normal response from promises')
+    })
 })
