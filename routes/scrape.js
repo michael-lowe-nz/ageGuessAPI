@@ -14,7 +14,7 @@ const {
 const getPeopleFromWiki = require('./../scrape/getPeopleFromWiki')
 
 /* GET entries */
-router.get('/:letter', function(req, res) {
+router.get('/people/:letter', function(req, res) {
   getPeopleFromWiki(`https://en.wikipedia.org/wiki/Category:Living_people?from=${req.params.letter}`)
   .then(urls => {
     urls.forEach(url => {
