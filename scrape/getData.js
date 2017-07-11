@@ -12,27 +12,28 @@ const getDataFromUrl = (url) => {
         const html = $.load(response.text)
         if (!pageExists(html)) return reject(`404: Page for ${url} not found.`)
         if (!pageHasImage(html)) return reject(`404: Page for ${url} has no image.`)
-        resolve(constructData(html))
+        resolve(constructData(html, url))
       })
   })
 }
 
-const getDataFromName = (name) => {
-  return getDataFromUrl(getWikiUrl(name))
+const getDataFromName = (name) => getDataFromUrl(getWikiUrl(name))
+
+
+const constructData = (html, wikiUrl) => {
+  const ageRaw = html('.ForceAgeToShow').text()
+  return {
+    fullName: html('#firstHeading').text(),
+    age: getAgeFromString(ageRaw),
+    imgUrl: formatImgUrl(html('.infobox .image img').attr('src')),
+    wikiUrl
+  }
 }
 
 const pageHasImage = (html) => html('body').find('.infobox .image img').length ? true : false
 const pageIsPerson = (html) => html('body').find('.biography').length ? true : false
 const pageExists = (html) => html('body').find('#noarticletext').length ? false : true
 
-const constructData = (html) => {
-  const ageRaw = html('.ForceAgeToShow').text()
-  return {
-    fullName: html('#firstHeading').text(),
-    age: getAgeFromString(ageRaw),
-    url: formatImgUrl(html('.infobox .image img').attr('src'))
-  }
-}
 module.exports = {
   getDataFromUrl,
   getDataFromName
