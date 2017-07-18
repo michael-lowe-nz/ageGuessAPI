@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Age</th>
       <th>Img</th>
+      <th>Wiki URL</th>
     </tr>
   </thead>
   {{#each entries as |entry|}}
@@ -13,6 +14,7 @@
     <td>{{entry.fullName}}</td>
     <td>{{entry.age}}</td>
     <td><img src="{{entry.imgUrl}}"/></td>
+    <td><a href="{{entry.wikiUrl}}">{{entry.wikiUrl}}</a></td>
   </tr>
   {{/each}}
 </table>

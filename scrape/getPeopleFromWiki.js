@@ -7,7 +7,6 @@ const getPeopleFromWiki = (url) => {
       .end((error, response) => {
         const html = $.load(response.text)
         let people = []
-        //.load(response.text)
         html('.mw-category ul li a').each((index, item) => {
             people.push(`https://en.wikipedia.org${item.attribs.href}`)
         })

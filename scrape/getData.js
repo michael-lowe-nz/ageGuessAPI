@@ -19,7 +19,6 @@ const getDataFromUrl = (url) => {
 
 const getDataFromName = (name) => getDataFromUrl(getWikiUrl(name))
 
-
 const constructData = (html, wikiUrl) => {
   const ageRaw = html('.ForceAgeToShow').text()
   return {
@@ -30,9 +29,8 @@ const constructData = (html, wikiUrl) => {
   }
 }
 
-const pageHasImage = (html) => html('body').find('.infobox .image img').length ? true : false
-const pageIsPerson = (html) => html('body').find('.biography').length ? true : false
 const pageExists = (html) => html('body').find('#noarticletext').length ? false : true
+const pageHasImage = (html) => html('body').find('.infobox .image img').length ? true : false
 
 module.exports = {
   getDataFromUrl,
