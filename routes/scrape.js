@@ -7,10 +7,12 @@ const {
   addEntry,
   deleteEntry
 } = require('./../db/entries')
+
 const {
   getDataFromUrl,
   getDataFromName
 } = require('./../scrape/getData')
+
 const getPeopleFromWiki = require('./../scrape/getPeopleFromWiki')
 
 /* GET entries */

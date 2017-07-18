@@ -8,9 +8,10 @@ const getPeopleFromWiki = (url) => {
         const html = $.load(response.text)
         let people = []
         html('.mw-category ul li a').each((index, item) => {
-            people.push(`https://en.wikipedia.org${item.attribs.href}`)
+          // if(/**This url is already in the DB**/)
+          people.push(`https://en.wikipedia.org${item.attribs.href}`)
         })
-        if (!people) return reject('List Length is Not 200')
+        if (!people) return reject('Array is empty')
         resolve(people)
       })
   })
