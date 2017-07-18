@@ -1,2 +1,18 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Img</th>
+    </tr>
+  </thead>
+  {{#each entries as |entry|}}
+  <tr>
+    <td>{{entry.fullName}}</td>
+    <td>{{entry.age}}</td>
+    <td><img src="{{entry.imgUrl}}"/></td>
+  </tr>
+  {{/each}}
+</table>
