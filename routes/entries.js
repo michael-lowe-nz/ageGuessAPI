@@ -4,6 +4,7 @@ var router = express.Router();
 const {
   getEntry,
   getAllEntries,
+  getEntryByUrl,
   addEntry,
   deleteEntry
 } = require('./../db/entries')
@@ -20,6 +21,18 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
   getEntry(req.params.id)
     .then(response => res.json(response))
+    .catch(err => res.send(err))
+});
+
+/* Entry Exists */
+router.post('/exists', function(req, res) {
+  console.log("url: ", req.body.url)
+  getEntryByUrl(req.body.url)
+    .then(response => {
+      console.log("response: ", response)
+      if (response.length) return res.send(true)
+      res.send(false)
+    })
     .catch(err => res.send(err))
 });
 

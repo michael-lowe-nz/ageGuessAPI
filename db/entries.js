@@ -10,9 +10,12 @@ const addEntry = (data) => knex('entries').insert(data)
 
 const deleteEntry = (id) => knex('entries').where('id', id).del()
 
+const getEntryByUrl = (wikiUrl) => knex.select('id').from('entries').where('wikiUrl', wikiUrl)
+
 module.exports = {
-  getAllEntries,
-  getEntry,
   addEntry,
   deleteEntry,
+  getEntryByUrl,
+  getAllEntries,
+  getEntry,
 }
