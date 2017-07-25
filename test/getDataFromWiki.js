@@ -45,7 +45,7 @@ test('getDataFromName does not throw an error when the wiki page has an image', 
 })
 
 test('getDataFromName can operate on a whole array of names and throw no errors', t => {
-  const people = ["mariah_carey", "peter_jackson", "stephen_curry", "winston_churchill"]
+  const people = ["peter_jackson", "stephen_curry", "james_cameron"]
   const promises = people.map(name => getDataFromName(name))
   return Promise.all(promises)
     .then(response => t.ok(response, 'Normal response from promises'))
@@ -54,5 +54,5 @@ test('getDataFromName can operate on a whole array of names and throw no errors'
 test('getData throws an error when a wiki page without an age is given', t => {
   return getDataFromName('Syed_Ali_Nasir_Saeed_Abaqati')
     .then(response => t.notOk(response))
-    .catch(error => t.ok(error, 'Person has no age'))
+    .catch(error => t.ok(error, 'Page has no age'))
 })

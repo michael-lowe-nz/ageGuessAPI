@@ -12,6 +12,7 @@ const getDataFromUrl = (url) => {
         const html = $.load(response.text)
         if (!pageExists(html)) return reject(`404: Page for ${url} not found.`)
         if (!pageHasImage(html)) return reject(`404: Page for ${url} has no image.`)
+        if (!pageHasAge(html)) return reject(`Page for ${url} has no age`)
         resolve(constructData(html, url))
       })
   })

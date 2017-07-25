@@ -1,5 +1,6 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+<p>Entries: <b>{{entries.length}}</b>
 <table>
   <thead>
     <tr>
@@ -7,6 +8,7 @@
       <th>Age</th>
       <th>Img</th>
       <th>Wiki URL</th>
+      <th>ID</th>
     </tr>
   </thead>
   {{#each entries as |entry|}}
@@ -15,6 +17,7 @@
     <td>{{entry.age}}</td>
     <td><img src="{{entry.imgUrl}}"/></td>
     <td><a href="{{entry.wikiUrl}}">{{entry.wikiUrl}}</a></td>
+    <td>{{entry.id}}</td>
   </tr>
   {{/each}}
 </table>
