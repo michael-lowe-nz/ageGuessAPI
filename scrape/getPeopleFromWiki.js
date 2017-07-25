@@ -1,6 +1,9 @@
 const $ = require('cheerio')
 const request = require('superagent')
 
+// takes a url, get's all the links on that pages
+// Should filter 
+
 const getPeopleFromWiki = (url) => {
   return new Promise((resolve, reject) => {
     request.get(url)

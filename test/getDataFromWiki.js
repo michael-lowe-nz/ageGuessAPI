@@ -14,7 +14,7 @@ test('getDataFromUrl scrapes lebron_james and resolves with correct JSON', t => 
   }
   return getDataFromName('lebron_james')
     .then(actual => t.deepEqual(actual, expected, 'It can retrieve a POJO of Lebron James name, age and url'))
-    .catch(error => t.notOk(error))
+    .catch(erroror => t.notOk(error))
 })
 
 test('getDataFromUrl throws an error when wiki page does not exist', t => {
@@ -29,18 +29,18 @@ test('getDataFromUrl throws an error when wiki page does not exist', t => {
 test('getDataFromUrl does not throw an error when wiki page does exist', t => {
   const url = 'https://en.wikipedia.org/wiki/George_Clooney'
   return getDataFromUrl(url)
-    .then(res => t.ok(res))
+    .then(response => t.ok(response))
 })
 
 test('getDataFromName throws an error when the wiki page does not have an image', t => {
   return getDataFromName('Aamer_Butt_(cricketer,_born_1976)')
-    .then(res => t.notOk(res))
+    .then(response => t.notOk(response))
     .catch(error => t.ok(error))
 })
 
 test('getDataFromName does not throw an error when the wiki page has an image', t => {
   return getDataFromName('George_Clooney')
-    .then(res => t.ok(res))
+    .then(response => t.ok(response))
     .catch(error => t.notOk(error))
 })
 
@@ -48,5 +48,11 @@ test('getDataFromName can operate on a whole array of names and throw no errors'
   const people = ["mariah_carey", "peter_jackson", "stephen_curry", "winston_churchill"]
   const promises = people.map(name => getDataFromName(name))
   return Promise.all(promises)
-    .then(res => t.ok(res, 'Normal response from promises'))
+    .then(response => t.ok(response, 'Normal response from promises'))
+})
+
+test('getData throws an error when a wiki page without an age is given', t => {
+  return getDataFromName('Syed_Ali_Nasir_Saeed_Abaqati')
+    .then(response => t.notOk(response))
+    .catch(error => t.ok(error, 'Person has no age'))
 })

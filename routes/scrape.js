@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+/** DB **/
 const {
   getEntry,
   getAllEntries,
@@ -8,11 +9,11 @@ const {
   deleteEntry
 } = require('./../db/entries')
 
+/** Scraping **/
 const {
   getDataFromUrl,
   getDataFromName
 } = require('./../scrape/getData')
-
 const getPeopleFromWiki = require('./../scrape/getPeopleFromWiki')
 
 /* GET entries */

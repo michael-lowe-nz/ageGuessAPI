@@ -31,6 +31,7 @@ const constructData = (html, wikiUrl) => {
 
 const pageExists = (html) => html('body').find('#noarticletext').length ? false : true
 const pageHasImage = (html) => html('body').find('.infobox .image img').length ? true : false
+const pageHasAge = (html) => html('body').find('.ForceAgeToShow').length ? true : false
 
 module.exports = {
   getDataFromUrl,
