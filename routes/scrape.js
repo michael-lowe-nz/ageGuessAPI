@@ -19,18 +19,13 @@ const getDataFromArray = require('./../scrape/getDataFromArray')
 
 /* GET entries */
 router.get('/people/:letter', function(req, res) {
-  const arrayOfLetters = 'abc'.split('')
-  let current = 0
-  getPeopleFromWiki(`https://en.wikipedia.org/wiki/Category:Living_people?from=${req.params.letter}`)
-    .then(urls => getDataFromArray(urls))
-    .then(() => getPeopleFromWiki(`https://en.wikipedia.org/wiki/Category:Living_people?from=${req.params.letter}${arrayOfLetters[0]}`))
-    .then(urls => getDataFromArray(urls))
-    .then(() => getPeopleFromWiki(`https://en.wikipedia.org/wiki/Category:Living_people?from=${req.params.letter}${arrayOfLetters[1]}`))
-    .then(urls => getDataFromArray(urls))
-    .then(() => getPeopleFromWiki(`https://en.wikipedia.org/wiki/Category:Living_people?from=${req.params.letter}${arrayOfLetters[2]}`))
-    .then(urls => getDataFromArray(urls))
-    .then(() => res.redirect('/'))
-    .catch(error => res.send('Error!', error))
+  const arrayOfLetters = 'abcdefghijklmnopqrstuvwxyz'.split('')
+  arrayOfLetters.push('')
+  arrayOfLetters.forEach(letter => {
+    getPeopleFromWiki(`https://en.wikipedia.org/wiki/Category:Living_people?from=${req.params.letter}${letter}`)
+      .then(urls => getDataFromArray(urls))
+      .catch(error => res.send(error, 'Error!'))
+  })
 })
 
 module.exports = router;
