@@ -9,6 +9,7 @@ const getDataFromUrl = (url) => {
     request
       .get(url)
       .end((error, response) => {
+        if(error) return reject('Error Retrieving Page (superagent)')
         const html = $.load(response.text)
         if (!pageExists(html)) return reject(`404: Page for ${url} not found.`)
         if (!pageHasImage(html)) return reject(`404: Page for ${url} has no image.`)

@@ -9,11 +9,9 @@ const {
 router.get('/', function(req, res) {
   getAllEntries()
   .then(entries => {
-    console.log("entries:", entries)
     res.render('index',
     {
       title: 'ageGuessAPI',
-      myArray: ['yo', 'yoo'],
       entries: entries
     })
   })
