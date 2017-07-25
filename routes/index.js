@@ -18,4 +18,8 @@ router.get('/', function(req, res) {
   .catch(error => console.log(error))
 });
 
+router.get('/secret', (req, res) => {
+  res.send('michael is coolangatta')
+})
+
 module.exports = router;
