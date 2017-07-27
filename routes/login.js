@@ -6,8 +6,8 @@ const passport  = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 
 passport.use(new FacebookStrategy({
-    clientID: process.env.APP_ID,
-    clientSecret: process.env.APP_SECRET,
+    clientID: '1361439737242490',
+    clientSecret: 'fee631585736ee39a1405afe7e64fda5',
     callbackURL: "https://age-guess-api.herokuapp.com"
   },
   function(accessToken, refreshToken, profile, done) {
