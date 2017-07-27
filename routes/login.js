@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
+require('dotenv').config()
 
 const passport  = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 
 passport.use(new FacebookStrategy({
-    clientID: 'fsddf',
-    clientSecret: 'FACEBOOK_APP_SECRET',
+    clientID: process.env.APP_ID,
+    clientSecret: process.env.APP_SECRET,
     callbackURL: "https://age-guess-api.herokuapp.com"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -29,6 +30,14 @@ router.get('/auth/facebook/callback',
     successRedirect: '/',
     failureRedirect: '/login'
   })
+)
+
+router.get(
+  '/auth/facebook/secret',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.send('Hello This is A Secret!')
+  }
 )
 
 module.exports = router;
