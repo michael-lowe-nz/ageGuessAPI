@@ -5,14 +5,19 @@ require('dotenv').config()
 var passport  = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy
 
+const { createUser } = require('../db/users')
+
 passport.use(new FacebookStrategy({
     clientID: process.env.APP_ID,
     clientSecret: process.env.APP_SECRET,
-    callbackURL: "http://localhost:3000/login/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/users"
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('Response from fb', accessToken, refreshToken, profile)
-    done(null, 'michael')
+    createUser({
+      facebookId: profile.id,
+      name: 'my name yo'
+    }).then((response) => done(null, response))
   }
 ));
 
