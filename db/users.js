@@ -4,7 +4,7 @@ const knex = Knex(knexConfig)
 
 const getUserById = (id) => knex('users').where('id', id)
 
-const createUser = (user) => knex('users').insert(user)
+const createUser = (data) => knex('users').insert(data)
 
 module.exports = {
     getUserById,

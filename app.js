@@ -9,6 +9,7 @@ var entries = require('./routes/entries')
 var scrape = require('./routes/scrape')
 var index = require('./routes/index')
 var login = require('./routes/login')
+var users = require('./routes/users')
 
 var app = express()
 
@@ -27,6 +28,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/entries', entries)
+app.use('/api/users', users)
 app.use('/scrape', scrape)
 app.use('/login', login)
 app.use('/', index)

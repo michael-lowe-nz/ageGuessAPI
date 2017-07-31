@@ -8,7 +8,6 @@ const {
   addEntry,
   deleteEntry
 } = require('./../db/entries')
-const wiki  = require('wtf_wikipedia')
 
 /* GET entries */
 router.get('/', function(req, res) {
