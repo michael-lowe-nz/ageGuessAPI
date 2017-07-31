@@ -2,19 +2,17 @@ var express = require('express');
 var router = express.Router();
 require('dotenv').config()
 
-const passport  = require('passport')
-const FacebookStrategy = require('passport-facebook').Strategy
+var passport  = require('passport')
+var FacebookStrategy = require('passport-facebook').Strategy
 
 passport.use(new FacebookStrategy({
-    clientID: '1361439737242490',
-    clientSecret: 'fee631585736ee39a1405afe7e64fda5',
-    callbackURL: "https://age-guess-api.herokuapp.com"
+    clientID: process.env.APP_ID,
+    clientSecret: process.env.APP_SECRET,
+    callbackURL: "http://localhost:3000/login/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate(function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
+    console.log('Response from fb', accessToken, refreshToken, profile)
+    done(null, 'michael')
   }
 ));
 
@@ -23,12 +21,14 @@ router.get('/', function(req, res) {
   res.render('login')
 });
 
+/* Login Route */
 router.get('/auth/facebook', passport.authenticate('facebook'))
 
 router.get('/auth/facebook/callback',
-  passport.authenticate('facbeook', {
+  passport.authenticate('facebook', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    session: false
   })
 )
 
@@ -36,7 +36,7 @@ router.get(
   '/auth/facebook/secret',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => {
-    res.send('Hello This is A Secret!')
+    res.json({'Hello This is A Secret!': 'hi'})
   }
 )
 

@@ -9,10 +9,11 @@ const {
 router.get('/', function(req, res) {
   getAllEntries()
   .then(entries => {
+    const shortEntries = entries.slice(0,100)
     res.render('index',
     {
       title: 'ageGuessAPI',
-      entries: entries
+      entries: shortEntries
     })
   })
   .catch(error => console.log(error))
